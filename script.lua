@@ -148,21 +148,23 @@ local CursorExplodeToggle = MainTab:CreateToggle({
         while SelfExplodeBool do
             task.wait(CursorExplodeCooldown)
             local mousePosition = UserInputService:GetMouse().Hit.Position
-            if GunOrBomb == "Gun" then
-                local args = {
-                    tick(),
-                    LocalPlayer.Character:WaitForChild("Launcher"):WaitForChild("Stats"),
-                    mousePosition,
-                    LocalPlayer.Character:WaitForChild("Launcher"):WaitForChild("Assets"):WaitForChild("Rocket"):WaitForChild("Boom")
-                }
-                game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("explodeRocket"):FireServer(unpack(args))
-            else
-                local args = {
-                    tick(),
-                    LocalPlayer.Character:WaitForChild("Bomb"):WaitForChild("Stats"),
-                    mousePosition
-                }
-                game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("explodeBomb"):FireServer(unpack(args))
+            if UserInputService:IsKeyDown("E") then
+                if GunOrBomb == "Gun" then
+                    local args = {
+                        tick(),
+                        LocalPlayer.Character:WaitForChild("Launcher"):WaitForChild("Stats"),
+                        mousePosition,
+                        LocalPlayer.Character:WaitForChild("Launcher"):WaitForChild("Assets"):WaitForChild("Rocket"):WaitForChild("Boom")
+                    }
+                    game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("explodeRocket"):FireServer(unpack(args))
+                else
+                    local args = {
+                        tick(),
+                        LocalPlayer.Character:WaitForChild("Bomb"):WaitForChild("Stats"),
+                        mousePosition
+                    }
+                    game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("explodeBomb"):FireServer(unpack(args))
+                end
             end
         end
     end,
