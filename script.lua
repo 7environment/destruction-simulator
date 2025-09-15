@@ -76,8 +76,6 @@ local GunOrBombDropdown = MainTab:CreateDropdown({
     Flag = "GunOrBombDropdown", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(Options)
         GunOrBomb = Options[1]
-        print(Options)
-        print(GunOrBomb)
     end,
 })
 
@@ -104,7 +102,7 @@ local SelfExplodeToggle = MainTab:CreateToggle({
     Callback = function(Value)
         SelfExplodeBool = Value
         while SelfExplodeBool do
-            task.wait(SelfExplodeCooldown)
+            task.wait(SelfExplodeCooldown/1000)
             if GunOrBomb == "Gun" then
                 local args = {
                     tick(),
@@ -148,7 +146,7 @@ local CursorExplodeToggle = MainTab:CreateToggle({
     Callback = function(Value)
         SelfExplodeBool = Value
         while SelfExplodeBool do
-            task.wait(CursorExplodeCooldown)
+            task.wait(CursorExplodeCooldown/1000)
             local mousePosition = UserInputService:GetMouse().Hit.Position
             if UserInputService:IsKeyDown("E") then
                 if GunOrBomb == "Gun" then
