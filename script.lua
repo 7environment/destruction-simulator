@@ -294,21 +294,23 @@ local EveryoneExplodeToggle = FunTab:CreateToggle({
             for _, player in ipairs(Players:GetChildren()) do
                 task.wait()
                 if player.Name ~= LocalPlayer.Name then
-                    if GunOrBomb == "Gun" then
-                        local args = {
-                            tick(),
-                            LocalPlayer.Character:WaitForChild("Launcher"):WaitForChild("Stats"),
-                            player.Character:WaitForChild("HumanoidRootPart").Position,
-                            LocalPlayer.Character:WaitForChild("Launcher"):WaitForChild("Assets"):WaitForChild("Rocket"):WaitForChild("Boom")
-                        }
-                        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("explodeRocket"):FireServer(unpack(args))
-                    else
-                        local args = {
-                            tick(),
-                            LocalPlayer.Character:WaitForChild("Bomb"):WaitForChild("Stats"),
-                            player.Character:WaitForChild("HumanoidRootPart").Position
-                        }
-                        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("explodeBomb"):FireServer(unpack(args))
+                    if player.Character:FindFirstChild("HumanoidRootPart") then
+                        if GunOrBomb == "Gun" then
+                            local args = {
+                                tick(),
+                                LocalPlayer.Character:WaitForChild("Launcher"):WaitForChild("Stats"),
+                                player.Character:WaitForChild("HumanoidRootPart").Position,
+                                LocalPlayer.Character:WaitForChild("Launcher"):WaitForChild("Assets"):WaitForChild("Rocket"):WaitForChild("Boom")
+                            }
+                            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("explodeRocket"):FireServer(unpack(args))
+                        else
+                            local args = {
+                                tick(),
+                                LocalPlayer.Character:WaitForChild("Bomb"):WaitForChild("Stats"),
+                                player.Character:WaitForChild("HumanoidRootPart").Position
+                            }
+                            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("explodeBomb"):FireServer(unpack(args))
+                        end
                     end
                 end
             end
