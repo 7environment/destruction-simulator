@@ -147,8 +147,8 @@ local CursorExplodeToggle = MainTab:CreateToggle({
         SelfExplodeBool = Value
         while SelfExplodeBool do
             task.wait(CursorExplodeCooldown/1000)
-            local mousePosition = UserInputService:GetMouse().Hit.Position
-            if UserInputService:IsKeyDown("E") then
+            local mousePosition = LocalPlayer:GetMouse().Hit.p
+            if UserInputService:IsKeyDown(Enum.KeyCode.E) then
                 if GunOrBomb == "Gun" then
                     local args = {
                         tick(),
