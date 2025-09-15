@@ -267,7 +267,7 @@ local autoMoneyGenToggle = MiscTab:CreateToggle({
 
 local FunTab = Window:CreateTab("Fun tab", 4483362458) -- Title, Image
 
-local EveryoneExplodeSection = MainTab:CreateSection("Everyone Explode Section (gun/bomb in your hand required)")
+local EveryoneExplodeSection = FunTab:CreateSection("Everyone Explode Section (gun/bomb in your hand required)")
 
 local EveryoneExplodeCooldown = 500
 local EveryoneExplodeSlider = FunTab:CreateSlider({
