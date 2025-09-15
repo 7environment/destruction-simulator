@@ -1,7 +1,8 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local UserInputService = game:GetService("UserInputService")
-local LocalPlayer = game:GetService("Players").LocalPlayer
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
 
 local Window = Rayfield:CreateWindow({
     Name = "0iq's Destruction simulator GUI",
@@ -65,7 +66,7 @@ local AutoSellToggle = MainTab:CreateToggle({
     end,
 })
 
-local GunOrBombSection = MainTab:CreateSection("Choose explode")
+local GunOrBombSection = MainTab:CreateSection("Choose explode (gun works obly)")
 
 local GunOrBomb = "Gun"
 local GunOrBombDropdown = MainTab:CreateDropdown({
@@ -159,6 +160,13 @@ local CursorExplodeToggle = MainTab:CreateToggle({
                     game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("explodeRocket"):FireServer(unpack(args))
                 else
                     local args = {
+                        tick()-1,
+                        game:GetService("Players").LocalPlayer.Character:WaitForChild("Bomb"):WaitForChild("Stats"),
+                        vector.create(-6.669300556182861, 1.4908807277679443, -482.17095947265625)
+                    }
+                    game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("explodeBomb"):FireServer(unpack(args))
+
+                    local args = {
                         tick(),
                         LocalPlayer.Character:WaitForChild("Bomb"):WaitForChild("Stats"),
                         mousePosition
@@ -209,6 +217,20 @@ local GetAllBoosts = MiscTab:CreateButton({
             2
         }
         game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("generateBoost"):FireServer(unpack(args))
+    end,
+})
+
+local Get55Level = MiscTab:CreateButton({
+    Name = "Get 55 Level",
+    Callback = function()
+        for i = 1, 3, 1 do
+            local args = {
+            "Levels",
+            480,
+            19 --max level per use
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("generateBoost"):FireServer(unpack(args))
+        end
     end,
 })
 
@@ -267,5 +289,56 @@ local JumpSlider = PlayerTab:CreateSlider({
     Callback = function(Value)
         LocalPlayer.Character:WaitForChild("Humanoid").JumpPower = Value
         LocalPlayer.Character:WaitForChild("Humanoid").UseJumpPower = true
+    end,
+})
+
+local FunTab = Window:CreateTab("Fun tab", 4483362458) -- Title, Image
+
+local EveryoneExplodeSection = MainTab:CreateSection("Everyone Explode Section (gun/bomb in your hand required)")
+
+local EveryoneExplodeCooldown = 500
+local EveryoneExplodeSlider = MainTab:CreateSlider({
+    Name = "Explode Cooldown",
+    Range = {0, 5000},
+    Increment = 10,
+    Suffix = "Milliseconds",
+    CurrentValue = 500,
+    Flag = "EveryoneExplodeSlider", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        EveryoneExplodeCooldown = Value
+    end,
+})
+
+local EveryoneExplodeBool = false
+local EveryoneExplodeToggle = FunTab:CreateToggle({
+    Name = "Explodes Everyone",
+    CurrentValue = false,
+    Flag = "EveryoneExplodeToggle", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        EveryoneExplodeBool = Value
+        while EveryoneExplodeBool do
+            task.wait(EveryoneExplodeCooldown/1000)
+            for _, player in ipairs(Players:GetChildren()) do
+                task.wait()
+                if player.Name ~= LocalPlayer.Name then
+                    if GunOrBomb == "Gun" then
+                        local args = {
+                            tick(),
+                            LocalPlayer.Character:WaitForChild("Launcher"):WaitForChild("Stats"),
+                            player.Character:WaitForChild("HumanoidRootPart").Position,
+                            LocalPlayer.Character:WaitForChild("Launcher"):WaitForChild("Assets"):WaitForChild("Rocket"):WaitForChild("Boom")
+                        }
+                        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("explodeRocket"):FireServer(unpack(args))
+                    else
+                        local args = {
+                            tick(),
+                            LocalPlayer.Character:WaitForChild("Bomb"):WaitForChild("Stats"),
+                            player.Character:WaitForChild("HumanoidRootPart").Position
+                        }
+                        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("explodeBomb"):FireServer(unpack(args))
+                    end
+                end
+            end
+        end
     end,
 })
