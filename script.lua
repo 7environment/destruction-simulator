@@ -265,39 +265,12 @@ local autoMoneyGenToggle = MiscTab:CreateToggle({
     end,
 })
 
-local PlayerTab = Window:CreateTab("Player tab", 4483362458) -- Title, Image
-
-local SpeedSlider = PlayerTab:CreateSlider({
-    Name = "Player Speed ",
-    Range = {0, 200},
-    Increment = 1,
-    Suffix = "Bananas",
-    CurrentValue = 16,
-    Flag = "SpeedSlider", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-    Callback = function(Value)
-        LocalPlayer.Character:WaitForChild("Humanoid").WalkSpeed = Value
-    end,
-})
-
-local JumpSlider = PlayerTab:CreateSlider({
-    Name = "Jump Power",
-    Range = {0, 200},
-    Increment = 1,
-    Suffix = "Bananas",
-    CurrentValue = 50,
-    Flag = "JumpSlider", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-    Callback = function(Value)
-        LocalPlayer.Character:WaitForChild("Humanoid").JumpPower = Value
-        LocalPlayer.Character:WaitForChild("Humanoid").UseJumpPower = true
-    end,
-})
-
 local FunTab = Window:CreateTab("Fun tab", 4483362458) -- Title, Image
 
 local EveryoneExplodeSection = MainTab:CreateSection("Everyone Explode Section (gun/bomb in your hand required)")
 
 local EveryoneExplodeCooldown = 500
-local EveryoneExplodeSlider = MainTab:CreateSlider({
+local EveryoneExplodeSlider = FunTab:CreateSlider({
     Name = "Explode Cooldown",
     Range = {0, 5000},
     Increment = 10,
@@ -340,5 +313,32 @@ local EveryoneExplodeToggle = FunTab:CreateToggle({
                 end
             end
         end
+    end,
+})
+
+local PlayerTab = Window:CreateTab("Player tab", 4483362458) -- Title, Image
+
+local SpeedSlider = PlayerTab:CreateSlider({
+    Name = "Player Speed ",
+    Range = {0, 200},
+    Increment = 1,
+    Suffix = "Bananas",
+    CurrentValue = 16,
+    Flag = "SpeedSlider", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        LocalPlayer.Character:WaitForChild("Humanoid").WalkSpeed = Value
+    end,
+})
+
+local JumpSlider = PlayerTab:CreateSlider({
+    Name = "Jump Power",
+    Range = {0, 200},
+    Increment = 1,
+    Suffix = "Bananas",
+    CurrentValue = 50,
+    Flag = "JumpSlider", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        LocalPlayer.Character:WaitForChild("Humanoid").JumpPower = Value
+        LocalPlayer.Character:WaitForChild("Humanoid").UseJumpPower = true
     end,
 })
