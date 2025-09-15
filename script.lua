@@ -106,16 +106,16 @@ local SelfExplodeToggle = MainTab:CreateToggle({
             if GunOrBomb == "Gun" then
                 local args = {
                     tick(),
-                    LocalPlayer:WaitForChild("Character"):WaitForChild("Launcher"):WaitForChild("Stats"),
-                    LocalPlayer:WaitForChild("Character"):WaitForChild("HumanoidRootPart").Position,
-                    LocalPlayer:WaitForChild("Character"):WaitForChild("Launcher"):WaitForChild("Assets"):WaitForChild("Rocket"):WaitForChild("Boom")
+                    LocalPlayer.Character:WaitForChild("Launcher"):WaitForChild("Stats"),
+                    LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position,
+                    LocalPlayer.Character:WaitForChild("Launcher"):WaitForChild("Assets"):WaitForChild("Rocket"):WaitForChild("Boom")
                 }
                 game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("explodeRocket"):FireServer(unpack(args))
             else
                 local args = {
                     tick(),
-                    LocalPlayer:WaitForChild("Character"):WaitForChild("Bomb"):WaitForChild("Stats"),
-                    LocalPlayer:WaitForChild("Character"):WaitForChild("HumanoidRootPart").Position
+                    LocalPlayer.Character:WaitForChild("Bomb"):WaitForChild("Stats"),
+                    LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position
                 }
                 game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("explodeBomb"):FireServer(unpack(args))
             end
@@ -140,7 +140,7 @@ local CursorExplodeSlider = MainTab:CreateSlider({
 
 local CursorExplodeBool = false
 local CursorExplodeToggle = MainTab:CreateToggle({
-    Name = "Explodes Cursor",
+    Name = "Explodes Cursor (Hold E to explode cursor)",
     CurrentValue = false,
     Flag = "CursorExplodeToggle", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(Value)
@@ -151,15 +151,15 @@ local CursorExplodeToggle = MainTab:CreateToggle({
             if GunOrBomb == "Gun" then
                 local args = {
                     tick(),
-                    LocalPlayer:WaitForChild("Character"):WaitForChild("Launcher"):WaitForChild("Stats"),
+                    LocalPlayer.Character:WaitForChild("Launcher"):WaitForChild("Stats"),
                     mousePosition,
-                    LocalPlayer:WaitForChild("Character"):WaitForChild("Launcher"):WaitForChild("Assets"):WaitForChild("Rocket"):WaitForChild("Boom")
+                    LocalPlayer.Character:WaitForChild("Launcher"):WaitForChild("Assets"):WaitForChild("Rocket"):WaitForChild("Boom")
                 }
                 game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("explodeRocket"):FireServer(unpack(args))
             else
                 local args = {
                     tick(),
-                    LocalPlayer:WaitForChild("Character"):WaitForChild("Bomb"):WaitForChild("Stats"),
+                    LocalPlayer.Character:WaitForChild("Bomb"):WaitForChild("Stats"),
                     mousePosition
                 }
                 game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("explodeBomb"):FireServer(unpack(args))
@@ -171,7 +171,7 @@ local CursorExplodeToggle = MainTab:CreateToggle({
 local MiscTab = Window:CreateTab("Misc tab", 4483362458) -- Title, Image
 
 local GetAllBoosts = MiscTab:CreateButton({
-    Name = "Button Example",
+    Name = "Get All Boosts",
     Callback = function()
         local args = {
             "CoinBoost",
@@ -230,7 +230,7 @@ local autoMoneyGenToggle = MiscTab:CreateToggle({
     Callback = function(Value)
         autoMoneyGen = Value
         while autoMoneyGen do
-            task.wait(.2)
+            task.wait(.01)
             local args = {
                 "Coins",
                 480,
@@ -251,7 +251,7 @@ local SpeedSlider = PlayerTab:CreateSlider({
     CurrentValue = 16,
     Flag = "SpeedSlider", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(Value)
-        LocalPlayer:WaitForChild("Character"):WaitForChild("Humanoid").WalkSpeed = Value
+        LocalPlayer.Character:WaitForChild("Humanoid").WalkSpeed = Value
     end,
 })
 
@@ -263,7 +263,7 @@ local JumpSlider = PlayerTab:CreateSlider({
     CurrentValue = 50,
     Flag = "JumpSlider", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(Value)
-        LocalPlayer:WaitForChild("Character"):WaitForChild("Humanoid").JumpPower = Value
-        LocalPlayer:WaitForChild("Character"):WaitForChild("Humanoid").UseJumpPower = true
+        LocalPlayer.Character:WaitForChild("Humanoid").JumpPower = Value
+        LocalPlayer.Character:WaitForChild("Humanoid").UseJumpPower = true
     end,
 })
